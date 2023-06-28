@@ -1,2 +1,36 @@
 server:
   port: 9000
+
+logging:
+  level:
+    org.springframework.security: trace
+
+spring:
+  security:
+    user:
+      name: user1
+      password: password
+    oauth2:
+      authorizationserver:
+        client:
+          articles-client:
+            registration:
+              client-id: "articles-client"
+              client-secret: "{noop}secret"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              #                - "client_credentials"
+              redirect-uris:
+                - "http://127.0.0.1:8080/login/oauth2/code/articles-client-oidc"
+                - "http://127.0.0.1:8080/authorized"
+              #              post-logout-redirect-uris:
+              #                - "http://127.0.0.1:8080/logged-out"
+              scopes:
+                - "openid"
+                #                - "profile"
+                - "articles.read"
+            #                - "articles.write"
+            require-authorization-consent: false
